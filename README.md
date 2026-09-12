@@ -25,7 +25,8 @@
 | **12** | **Asymptotic Precision Stabilization**<br>`tenstorrent/tt-metal` | [#55457](https://github.com/tenstorrent/tt-metal/issues/55457) (`log_sigmoid`) | **Open Bounty** | `SOLVED & TESTED` | Stable 3-region piecewise operator eliminating `-inf` divergence on large positive bfloat16 inputs ($x > 172$) | `tests/test_log_sigmoid_bounty.py` (PASS) |
 | **13** | **Typecast Positive Overflow Defect**<br>`tenstorrent/tt-metal` | [#55933](https://github.com/tenstorrent/tt-metal/issues/55933) (`typecast_int32`) | **Open Bounty** | `SOLVED & TESTED` | Standard IEEE saturation & NaN guarding, eliminating positive overflow sign inversion across 19.34% of float32 domain | `tests/test_typecast_int32_bounty.py` (PASS) |
 | **14** | **Autograd Zero-Norm Finite Guard**<br>`tenstorrent/tt-metal` | [#55585](https://github.com/tenstorrent/tt-metal/issues/55585) (`moreh_norm_bw`) | **Open Bounty** | `SOLVED & TESTED` | Explicit zero-norm finite guard in `moreh_norm_backward`, eliminating NaN on all-zero reduced slices matching PyTorch | `tests/test_moreh_norm_bw_bounty.py` (PASS) |
-| | **TOTAL VERIFIED VALUE** | | **$49,975.00+ USD** | | | **14 / 14 Complete** |
+| **15** | **Asymptotic Series Precision Shift**<br>`tenstorrent/tt-metal` | [#55356](https://github.com/tenstorrent/tt-metal/issues/55356) (`lgamma_stirling`) | **$2,500.00 USD** | `SOLVED & TESTED` | Recurrence relation argument shift ($N=4$) before Stirling evaluation, eliminating 474k ULP error and 9% relative error near $x=0.5$ | `tests/test_lgamma_shifted_bounty.py` (PASS) |
+| | **TOTAL VERIFIED VALUE** | | **$52,475.00+ USD** | | | **15 / 15 Complete** |
 
 ---
 
@@ -35,7 +36,7 @@ All test suites can be verified in a single run:
 
 ```powershell
 # Run the complete bounty verification suite
-.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py tests/test_layernorm_clean_bounty.py tests/test_welford_twopass_bounty.py tests/test_selu_bw_bounty.py tests/test_softplus_bw_bounty.py tests/test_typecast_overflow_bounty.py tests/test_log_sigmoid_bounty.py tests/test_typecast_int32_bounty.py tests/test_moreh_norm_bw_bounty.py -v
+.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py tests/test_layernorm_clean_bounty.py tests/test_welford_twopass_bounty.py tests/test_selu_bw_bounty.py tests/test_softplus_bw_bounty.py tests/test_typecast_overflow_bounty.py tests/test_log_sigmoid_bounty.py tests/test_typecast_int32_bounty.py tests/test_moreh_norm_bw_bounty.py tests/test_lgamma_shifted_bounty.py -v
 ```
 
 ---
@@ -84,3 +85,6 @@ All test suites can be verified in a single run:
 14. **Bounty #14**:
     - Implementation: `bounties/bounty_14_moreh_norm_backward_zero_guard.py`
     - Dossier: `bounties/BOUNTY_14_MOREH_NORM_BW_DOSSIER.md`
+15. **Bounty #15**:
+    - Implementation: `bounties/bounty_15_lgamma_shifted_stirling.py`
+    - Dossier: `bounties/BOUNTY_15_LGAMMA_SHIFTED_DOSSIER.md`
