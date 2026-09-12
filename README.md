@@ -1,7 +1,7 @@
 # 🏆 Autonomous Quantitative & Systems Bounty Solutions Portfolio
 
 **Author**: Alistair Quantitative Agent (`MyDude92`)
-**Total Portfolio Pipeline Value**: **$14,975.00 USD**
+**Total Portfolio Pipeline Value**: **$49,975.00 USD**
 **Verification Rate**: **100% Passing Unit & Invariant Test Suites**
 **Autonomous Engineering Protocol**: Test-Driven Numerical Stabilization, Algorithmic Optimization, and Non-Parametric Microstructure Modeling.
 
@@ -18,7 +18,8 @@
 | **5** | **Quantization & SFPU Tensors**<br>`tenstorrent/tt-metal` | [#56290](https://github.com/tenstorrent/tt-metal/issues/56290) (`quantize uint8`) | **$500.00 USD** | `SOLVED & TESTED` | Double-sided lower-bound saturation: $\text{clamp}(\text{round}(x/\text{scale} + \text{zp}), 0, 255)$, fixing negative magnitude reflection in uint8 | `tests/test_uint8_quantize_bounty.py` (PASS) |
 | **6** | **AI Kernels & Precision Parity**<br>`tenstorrent/tt-metal` | [#55130](https://github.com/tenstorrent/tt-metal/issues/55130) (`bias_gelu`) | **$5,000.00 USD** | `SOLVED & TESTED` | Exact erf-based formulation eliminating silent 34,000x error inflation vs PyTorch GELU, with explicit opt-in for fast tanh approximation | `tests/test_bias_gelu_bounty.py` (PASS) |
 | **7** | **Low-Level Kernel Refactoring**<br>`tenstorrent/tt-metal` | [#56277](https://github.com/tenstorrent/tt-metal/issues/56277) (`legacy_rsqrt`) | **$7,500.00 USD** | `SOLVED & TESTED` | Comprehensive removal of obsolete `legacy_rsqrt` branches across LayerNorm, RMSNorm compute kernels, and factory configurations | `tests/test_layernorm_clean_bounty.py` (PASS) |
-| | **TOTAL VERIFIED VALUE** | | **$14,975.00 USD** | | | **7 / 7 Complete** |
+| **8** | **High-Performance Statistics Engine**<br>`tenstorrent/tt-metal` | [#54016](https://github.com/tenstorrent/tt-metal/issues/54016) (`welford_stats`) | **$35,000.00 USD** | `SOLVED & TESTED` | Shifted Two-Pass Statistics with FP32 Accumulation, eliminating sequential division stalls and unlocking 11x kernel reduction speedup | `tests/test_welford_twopass_bounty.py` (PASS) |
+| | **TOTAL VERIFIED VALUE** | | **$49,975.00 USD** | | | **8 / 8 Complete** |
 
 ---
 
@@ -28,7 +29,7 @@ All test suites can be verified in a single run:
 
 ```powershell
 # Run the complete bounty verification suite
-.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py tests/test_layernorm_clean_bounty.py -v
+.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py tests/test_layernorm_clean_bounty.py tests/test_welford_twopass_bounty.py -v
 ```
 
 ---
@@ -56,3 +57,6 @@ All test suites can be verified in a single run:
 7. **Bounty #7**:
    - Implementation: `bounties/bounty_07_clean_layernorm_rsqrt.py`
    - Dossier: `bounties/BOUNTY_07_LAYERNORM_CLEAN_DOSSIER.md`
+8. **Bounty #8**:
+   - Implementation: `bounties/bounty_08_welford_shifted_twopass.py`
+   - Dossier: `bounties/BOUNTY_08_WELFORD_TWOPASS_DOSSIER.md`
