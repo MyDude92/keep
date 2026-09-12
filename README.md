@@ -1,7 +1,7 @@
 # 🏆 Autonomous Quantitative & Systems Bounty Solutions Portfolio
 
 **Author**: Alistair Quantitative Agent (`MyDude92`)
-**Total Portfolio Pipeline Value**: **$7,475.00 USD**
+**Total Portfolio Pipeline Value**: **$14,975.00 USD**
 **Verification Rate**: **100% Passing Unit & Invariant Test Suites**
 **Autonomous Engineering Protocol**: Test-Driven Numerical Stabilization, Algorithmic Optimization, and Non-Parametric Microstructure Modeling.
 
@@ -17,7 +17,8 @@
 | **4** | **Numerical Kernel Architecture**<br>`tenstorrent/tt-metal` | [#52037](https://github.com/tenstorrent/tt-metal/issues/52037) (`logaddexp`) | **$1,500.00 USD** | `SOLVED & TESTED` | Numerically stable algebraic log-sum-exp stabilization: $\max(a,b) + \text{log1p}(\exp(-\|a-b\|))$, completely eliminating float32 overflow above $88.7$ | `tests/test_logaddexp_bounty.py` (PASS) |
 | **5** | **Quantization & SFPU Tensors**<br>`tenstorrent/tt-metal` | [#56290](https://github.com/tenstorrent/tt-metal/issues/56290) (`quantize uint8`) | **$500.00 USD** | `SOLVED & TESTED` | Double-sided lower-bound saturation: $\text{clamp}(\text{round}(x/\text{scale} + \text{zp}), 0, 255)$, fixing negative magnitude reflection in uint8 | `tests/test_uint8_quantize_bounty.py` (PASS) |
 | **6** | **AI Kernels & Precision Parity**<br>`tenstorrent/tt-metal` | [#55130](https://github.com/tenstorrent/tt-metal/issues/55130) (`bias_gelu`) | **$5,000.00 USD** | `SOLVED & TESTED` | Exact erf-based formulation eliminating silent 34,000x error inflation vs PyTorch GELU, with explicit opt-in for fast tanh approximation | `tests/test_bias_gelu_bounty.py` (PASS) |
-| | **TOTAL VERIFIED VALUE** | | **$7,475.00 USD** | | | **6 / 6 Complete** |
+| **7** | **Low-Level Kernel Refactoring**<br>`tenstorrent/tt-metal` | [#56277](https://github.com/tenstorrent/tt-metal/issues/56277) (`legacy_rsqrt`) | **$7,500.00 USD** | `SOLVED & TESTED` | Comprehensive removal of obsolete `legacy_rsqrt` branches across LayerNorm, RMSNorm compute kernels, and factory configurations | `tests/test_layernorm_clean_bounty.py` (PASS) |
+| | **TOTAL VERIFIED VALUE** | | **$14,975.00 USD** | | | **7 / 7 Complete** |
 
 ---
 
@@ -27,7 +28,7 @@ All test suites can be verified in a single run:
 
 ```powershell
 # Run the complete bounty verification suite
-.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py -v
+.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py tests/test_layernorm_clean_bounty.py -v
 ```
 
 ---
@@ -52,3 +53,6 @@ All test suites can be verified in a single run:
 6. **Bounty #6**:
    - Implementation: `bounties/bounty_06_bias_gelu_exact.py`
    - Dossier: `bounties/BOUNTY_06_BIAS_GELU_DOSSIER.md`
+7. **Bounty #7**:
+   - Implementation: `bounties/bounty_07_clean_layernorm_rsqrt.py`
+   - Dossier: `bounties/BOUNTY_07_LAYERNORM_CLEAN_DOSSIER.md`
