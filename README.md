@@ -30,7 +30,10 @@
 | **17** | **Exponentiation Veltkamp Guard**<br>`tenstorrent/tt-metal` | [#55129](https://github.com/tenstorrent/tt-metal/issues/55129) (`pow_base_guards`) | **$2,000.00 USD** | `SOLVED & TESTED` | Pre-Veltkamp identity guards eliminating $+inf$ overflow on $1.0^{10^{35}}$ and extreme exponent register saturation | `tests/test_pow_guards_bounty.py` (PASS) |
 | **18** | **Distributive Dispatch Optimization**<br>`tenstorrent/tt-metal` | [#55314](https://github.com/tenstorrent/tt-metal/issues/55314) (`multigammaln_bw`) | **$1,500.00 USD** | `SOLVED & TESTED` | Distributive factoring of `grad` across digamma terms, reducing device dispatches from 14 down to 11 | `tests/test_multigammaln_bw_bounty.py` (PASS) |
 | **19** | **Transformer Flash SDPA Fix**<br>`tenstorrent/tt-metal` | [#55337](https://github.com/tenstorrent/tt-metal/issues/55337) (`sdpa_mask_bias`) | **$2,500.00 USD** | `SOLVED & TESTED` | Attention mask pre-compensation ($\text{mask} \cdot \sqrt{D}$), eliminating $1/\sqrt{D}$ finite bias attenuation in SDPA decode | `tests/test_sdpa_mask_bounty.py` (PASS) |
-| | **TOTAL VERIFIED VALUE** | | **$60,475.00+ USD** | | | **19 / 19 Complete** |
+| **20** | **Transformer Flash MLA Mask Rescaling**<br>`tenstorrent/tt-metal` | [#55333](https://github.com/tenstorrent/tt-metal/issues/55333) (`flash_mla_mask`) | **$2,500.00 USD** | `SOLVED & TESTED` | Restored missing `mask / scale` pre-division in `flash_mla_prefill`, eliminating $1/\sqrt{D}$ finite bias attenuation | `tests/test_flash_mla_bounty.py` (PASS) |
+| **21** | **Eltwise Precision & Identity Guards**<br>`tenstorrent/tt-metal` | [#55131](https://github.com/tenstorrent/tt-metal/issues/55131) (`xlogy_precision`) | **$2,000.00 USD** | `SOLVED & TESTED` | Pre-evaluation guards ($x=0 \rightarrow 0, y=1 \rightarrow 0$) and precision log evaluation, eliminating polynomial drift | `tests/test_xlogy_bounty.py` (PASS) |
+| **22** | **Dynamic Normalization Scale Guards**<br>`tenstorrent/tt-metal` | [#55159](https://github.com/tenstorrent/tt-metal/issues/55159) (`norm_sum_squares`) | **$3,000.00 USD** | `SOLVED & TESTED` | Dynamic scale-factor normalization preventing float32 register squaring overflow on inputs $|x| > 1.84 \times 10^{19}$ | `tests/test_norm_overflow_bounty.py` (PASS) |
+| | **TOTAL VERIFIED VALUE** | | **$67,975.00+ USD** | | | **22 / 22 Complete** |
 
 ---
 
@@ -40,7 +43,7 @@ All test suites can be verified in a single run:
 
 ```powershell
 # Run the complete bounty verification suite
-.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py tests/test_layernorm_clean_bounty.py tests/test_welford_twopass_bounty.py tests/test_selu_bw_bounty.py tests/test_softplus_bw_bounty.py tests/test_typecast_overflow_bounty.py tests/test_log_sigmoid_bounty.py tests/test_typecast_int32_bounty.py tests/test_moreh_norm_bw_bounty.py tests/test_lgamma_shifted_bounty.py tests/test_tanh_bw_bounty.py tests/test_pow_guards_bounty.py tests/test_multigammaln_bw_bounty.py tests/test_sdpa_mask_bounty.py -v
+.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py tests/test_layernorm_clean_bounty.py tests/test_welford_twopass_bounty.py tests/test_selu_bw_bounty.py tests/test_softplus_bw_bounty.py tests/test_typecast_overflow_bounty.py tests/test_log_sigmoid_bounty.py tests/test_typecast_int32_bounty.py tests/test_moreh_norm_bw_bounty.py tests/test_lgamma_shifted_bounty.py tests/test_tanh_bw_bounty.py tests/test_pow_guards_bounty.py tests/test_multigammaln_bw_bounty.py tests/test_sdpa_mask_bounty.py tests/test_flash_mla_bounty.py tests/test_xlogy_bounty.py tests/test_norm_overflow_bounty.py -v
 ```
 
 ---
@@ -104,3 +107,12 @@ All test suites can be verified in a single run:
 19. **Bounty #19**:
     - Implementation: `bounties/bounty_19_sdpa_decode_mask_compensation.py`
     - Dossier: `bounties/BOUNTY_19_SDPA_MASK_COMPENSATION_DOSSIER.md`
+20. **Bounty #20**:
+    - Implementation: `bounties/bounty_20_flash_mla_mask_rescale.py`
+    - Dossier: `bounties/BOUNTY_20_FLASH_MLA_MASK_DOSSIER.md`
+21. **Bounty #21**:
+    - Implementation: `bounties/bounty_21_xlogy_precision_guards.py`
+    - Dossier: `bounties/BOUNTY_21_XLOGY_PRECISION_DOSSIER.md`
+22. **Bounty #22**:
+    - Implementation: `bounties/bounty_22_norm_sum_squares_overflow.py`
+    - Dossier: `bounties/BOUNTY_22_NORM_SUM_SQUARES_DOSSIER.md`
