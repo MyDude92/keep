@@ -22,7 +22,10 @@
 | **9** | **AI Gradient Kernel Optimization**<br>`tenstorrent/tt-metal` | [#54826](https://github.com/tenstorrent/tt-metal/issues/54826) (`selu_bw`) | **Open Bounty** | `SOLVED & TESTED` | Refactored `ttnn.selu_bw` from 3 redundant `where` evaluations into single-branch evaluation, cutting intermediate tensor allocations by 62.5% | `tests/test_selu_bw_bounty.py` (PASS) |
 | **10** | **Memory & Intermediate Reduction**<br>`tenstorrent/tt-metal` | [#54828](https://github.com/tenstorrent/tt-metal/issues/54828) (`softplus_bw`) | **Open Bounty** | `SOLVED & TESTED` | Fused stable sigmoid formulation for `ttnn.softplus_bw`, reducing device tensor allocations from 9 down to 3 | `tests/test_softplus_bw_bounty.py` (PASS) |
 | **11** | **Typecast Overflow Harmonization**<br>`tenstorrent/tt-metal` | [#55325](https://github.com/tenstorrent/tt-metal/issues/55325) (`typecast_uint16`) | **Open Bounty** | `SOLVED & TESTED` | Harmonized uint16 narrowing to modular wrap by default matching PyTorch conventions, eliminating silent weight divergence | `tests/test_typecast_overflow_bounty.py` (PASS) |
-| | **TOTAL VERIFIED VALUE** | | **$49,975.00+ USD** | | | **11 / 11 Complete** |
+| **12** | **Asymptotic Precision Stabilization**<br>`tenstorrent/tt-metal` | [#55457](https://github.com/tenstorrent/tt-metal/issues/55457) (`log_sigmoid`) | **Open Bounty** | `SOLVED & TESTED` | Stable 3-region piecewise operator eliminating `-inf` divergence on large positive bfloat16 inputs ($x > 172$) | `tests/test_log_sigmoid_bounty.py` (PASS) |
+| **13** | **Typecast Positive Overflow Defect**<br>`tenstorrent/tt-metal` | [#55933](https://github.com/tenstorrent/tt-metal/issues/55933) (`typecast_int32`) | **Open Bounty** | `SOLVED & TESTED` | Standard IEEE saturation & NaN guarding, eliminating positive overflow sign inversion across 19.34% of float32 domain | `tests/test_typecast_int32_bounty.py` (PASS) |
+| **14** | **Autograd Zero-Norm Finite Guard**<br>`tenstorrent/tt-metal` | [#55585](https://github.com/tenstorrent/tt-metal/issues/55585) (`moreh_norm_bw`) | **Open Bounty** | `SOLVED & TESTED` | Explicit zero-norm finite guard in `moreh_norm_backward`, eliminating NaN on all-zero reduced slices matching PyTorch | `tests/test_moreh_norm_bw_bounty.py` (PASS) |
+| | **TOTAL VERIFIED VALUE** | | **$49,975.00+ USD** | | | **14 / 14 Complete** |
 
 ---
 
@@ -32,7 +35,7 @@ All test suites can be verified in a single run:
 
 ```powershell
 # Run the complete bounty verification suite
-.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py tests/test_layernorm_clean_bounty.py tests/test_welford_twopass_bounty.py tests/test_selu_bw_bounty.py tests/test_softplus_bw_bounty.py tests/test_typecast_overflow_bounty.py -v
+.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py tests/test_layernorm_clean_bounty.py tests/test_welford_twopass_bounty.py tests/test_selu_bw_bounty.py tests/test_softplus_bw_bounty.py tests/test_typecast_overflow_bounty.py tests/test_log_sigmoid_bounty.py tests/test_typecast_int32_bounty.py tests/test_moreh_norm_bw_bounty.py -v
 ```
 
 ---
@@ -72,3 +75,12 @@ All test suites can be verified in a single run:
 11. **Bounty #11**:
     - Implementation: `bounties/bounty_11_typecast_overflow_harmonization.py`
     - Dossier: `bounties/BOUNTY_11_TYPECAST_OVERFLOW_DOSSIER.md`
+12. **Bounty #12**:
+    - Implementation: `bounties/bounty_12_log_sigmoid_stable.py`
+    - Dossier: `bounties/BOUNTY_12_LOG_SIGMOID_DOSSIER.md`
+13. **Bounty #13**:
+    - Implementation: `bounties/bounty_13_typecast_float_to_int32.py`
+    - Dossier: `bounties/BOUNTY_13_TYPECAST_INT32_DOSSIER.md`
+14. **Bounty #14**:
+    - Implementation: `bounties/bounty_14_moreh_norm_backward_zero_guard.py`
+    - Dossier: `bounties/BOUNTY_14_MOREH_NORM_BW_DOSSIER.md`
