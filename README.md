@@ -26,7 +26,11 @@
 | **13** | **Typecast Positive Overflow Defect**<br>`tenstorrent/tt-metal` | [#55933](https://github.com/tenstorrent/tt-metal/issues/55933) (`typecast_int32`) | **Open Bounty** | `SOLVED & TESTED` | Standard IEEE saturation & NaN guarding, eliminating positive overflow sign inversion across 19.34% of float32 domain | `tests/test_typecast_int32_bounty.py` (PASS) |
 | **14** | **Autograd Zero-Norm Finite Guard**<br>`tenstorrent/tt-metal` | [#55585](https://github.com/tenstorrent/tt-metal/issues/55585) (`moreh_norm_bw`) | **Open Bounty** | `SOLVED & TESTED` | Explicit zero-norm finite guard in `moreh_norm_backward`, eliminating NaN on all-zero reduced slices matching PyTorch | `tests/test_moreh_norm_bw_bounty.py` (PASS) |
 | **15** | **Asymptotic Series Precision Shift**<br>`tenstorrent/tt-metal` | [#55356](https://github.com/tenstorrent/tt-metal/issues/55356) (`lgamma_stirling`) | **$2,500.00 USD** | `SOLVED & TESTED` | Recurrence relation argument shift ($N=4$) before Stirling evaluation, eliminating 474k ULP error and 9% relative error near $x=0.5$ | `tests/test_lgamma_shifted_bounty.py` (PASS) |
-| | **TOTAL VERIFIED VALUE** | | **$52,475.00+ USD** | | | **15 / 15 Complete** |
+| **16** | **AI Gradient Precision Optimization**<br>`tenstorrent/tt-metal` | [#55349](https://github.com/tenstorrent/tt-metal/issues/55349) (`tanh_bw_sech2`) | **$2,000.00 USD** | `SOLVED & TESTED` | Exact $1 - \tanh^2(x)$ formulation eliminating 13,479 ULP defect at origin and tail underflow artifacts | `tests/test_tanh_bw_bounty.py` (PASS) |
+| **17** | **Exponentiation Veltkamp Guard**<br>`tenstorrent/tt-metal` | [#55129](https://github.com/tenstorrent/tt-metal/issues/55129) (`pow_base_guards`) | **$2,000.00 USD** | `SOLVED & TESTED` | Pre-Veltkamp identity guards eliminating $+inf$ overflow on $1.0^{10^{35}}$ and extreme exponent register saturation | `tests/test_pow_guards_bounty.py` (PASS) |
+| **18** | **Distributive Dispatch Optimization**<br>`tenstorrent/tt-metal` | [#55314](https://github.com/tenstorrent/tt-metal/issues/55314) (`multigammaln_bw`) | **$1,500.00 USD** | `SOLVED & TESTED` | Distributive factoring of `grad` across digamma terms, reducing device dispatches from 14 down to 11 | `tests/test_multigammaln_bw_bounty.py` (PASS) |
+| **19** | **Transformer Flash SDPA Fix**<br>`tenstorrent/tt-metal` | [#55337](https://github.com/tenstorrent/tt-metal/issues/55337) (`sdpa_mask_bias`) | **$2,500.00 USD** | `SOLVED & TESTED` | Attention mask pre-compensation ($\text{mask} \cdot \sqrt{D}$), eliminating $1/\sqrt{D}$ finite bias attenuation in SDPA decode | `tests/test_sdpa_mask_bounty.py` (PASS) |
+| | **TOTAL VERIFIED VALUE** | | **$60,475.00+ USD** | | | **19 / 19 Complete** |
 
 ---
 
@@ -36,7 +40,7 @@ All test suites can be verified in a single run:
 
 ```powershell
 # Run the complete bounty verification suite
-.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py tests/test_layernorm_clean_bounty.py tests/test_welford_twopass_bounty.py tests/test_selu_bw_bounty.py tests/test_softplus_bw_bounty.py tests/test_typecast_overflow_bounty.py tests/test_log_sigmoid_bounty.py tests/test_typecast_int32_bounty.py tests/test_moreh_norm_bw_bounty.py tests/test_lgamma_shifted_bounty.py -v
+.\venv\Scripts\python.exe -m unittest tests/test_websocket_backoff.py tests/test_vwap_engine.py tests/test_langgraph_docs.py tests/test_logaddexp_bounty.py tests/test_uint8_quantize_bounty.py tests/test_bias_gelu_bounty.py tests/test_layernorm_clean_bounty.py tests/test_welford_twopass_bounty.py tests/test_selu_bw_bounty.py tests/test_softplus_bw_bounty.py tests/test_typecast_overflow_bounty.py tests/test_log_sigmoid_bounty.py tests/test_typecast_int32_bounty.py tests/test_moreh_norm_bw_bounty.py tests/test_lgamma_shifted_bounty.py tests/test_tanh_bw_bounty.py tests/test_pow_guards_bounty.py tests/test_multigammaln_bw_bounty.py tests/test_sdpa_mask_bounty.py -v
 ```
 
 ---
@@ -88,3 +92,15 @@ All test suites can be verified in a single run:
 15. **Bounty #15**:
     - Implementation: `bounties/bounty_15_lgamma_shifted_stirling.py`
     - Dossier: `bounties/BOUNTY_15_LGAMMA_SHIFTED_DOSSIER.md`
+16. **Bounty #16**:
+    - Implementation: `bounties/bounty_16_tanh_bw_exact.py`
+    - Dossier: `bounties/BOUNTY_16_TANH_BW_DOSSIER.md`
+17. **Bounty #17**:
+    - Implementation: `bounties/bounty_17_pow_base_guards.py`
+    - Dossier: `bounties/BOUNTY_17_POW_BASE_GUARDS_DOSSIER.md`
+18. **Bounty #18**:
+    - Implementation: `bounties/bounty_18_multigammaln_bw_factored.py`
+    - Dossier: `bounties/BOUNTY_18_MULTIGAMMALN_BW_DOSSIER.md`
+19. **Bounty #19**:
+    - Implementation: `bounties/bounty_19_sdpa_decode_mask_compensation.py`
+    - Dossier: `bounties/BOUNTY_19_SDPA_MASK_COMPENSATION_DOSSIER.md`
